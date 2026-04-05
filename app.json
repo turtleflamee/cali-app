@@ -40,9 +40,14 @@
         "react-native-vision-camera",
         {
           "cameraPermissionText": "Allow camera access to track your exercises and check your form",
-          "enableMicrophonePermission": false
+          "enableMicrophonePermission": false,
+          "enableFrameProcessors": true
         }
-      ]
+      ],
+      [
+        "react-native-worklets-core"
+      ],
+      "./plugins/withMLKitPose"
     ],
     "extra": {
       "router": {},
