@@ -231,69 +231,41 @@ function buildProgressionLines(
     return s === "completed" || s === "current";
   };
 
-  // Connect start node to gateway exercises
-  const categories: Category[] = ["flexibility", "strength", "special"];
-  for (const cat of categories) {
-    const gw = gatewayExercises[cat];
-    if (isVisible(gw)) {
-      const gwPos = nodePositions.get(gw);
-      if (gwPos) {
-        const paths = categoryPaths[cat];
-        // Use color from the first path in the category
-        lines.push({
-          x1: CX,
-          y1: CY,
-          x2: gwPos.x,
-          y2: gwPos.y,
-          color: pathColors[paths[0]],
-        });
-      }
-    }
-  }
-
-  // Connect gateway to first exercise in each sub-path of its category
-  for (const cat of categories) {
-    const gwId = gatewayExercises[cat];
-    const gwPos = nodePositions.get(gwId);
-    if (!gwPos || !isVisible(gwId)) continue;
-
-    for (const p of categoryPaths[cat]) {
-      for (const sp of pathSubPaths[p]) {
-        const subExercises = getExercisesBySubPath(sp).sort(
-          (a, b) => a.difficulty - b.difficulty
-        );
-        // Find first exercise that is NOT the gateway itself
-        const first = subExercises.find(
-          (e) => e.id !== gwId && isVisible(e.id)
-        );
-        if (first) {
-          const firstPos = nodePositions.get(first.id);
-          if (firstPos) {
-            lines.push({
-              x1: gwPos.x,
-              y1: gwPos.y,
-              x2: firstPos.x,
-              y2: firstPos.y,
-              color: pathColors[first.path],
-            });
-          }
+  // Only draw lines based on the unlock tree — each parent → child connection
+  // This ensures lines only go between directly connected exercises
+  for (const [parentId, childIds] of Object.entries(unlockTree)) {
+    if (parentId === "__start__") {
+      // START → gateways
+      for (const childId of childIds) {
+        if (!isVisible(childId)) continue;
+        const childPos = nodePositions.get(childId);
+        if (childPos) {
+          const childEx = childPos.exercise;
+          lines.push({
+            x1: CX, y1: CY,
+            x2: childPos.x, y2: childPos.y,
+            color: childEx ? pathColors[childEx.path] : "#FFFFFF",
+          });
         }
       }
+      continue;
     }
-  }
 
-  // Progression edges — only if both endpoints visible
-  for (const edge of progressionEdges) {
-    if (!isVisible(edge.fromId) || !isVisible(edge.toId)) continue;
-    const from = nodePositions.get(edge.fromId);
-    const to = nodePositions.get(edge.toId);
-    if (from && to && from.exercise) {
+    // Parent → children: only draw if BOTH are visible
+    if (!isVisible(parentId)) continue;
+    const parentPos = nodePositions.get(parentId);
+    if (!parentPos) continue;
+
+    for (const childId of childIds) {
+      if (!isVisible(childId)) continue;
+      const childPos = nodePositions.get(childId);
+      if (!childPos) continue;
+
+      const childEx = childPos.exercise;
       lines.push({
-        x1: from.x,
-        y1: from.y,
-        x2: to.x,
-        y2: to.y,
-        color: pathColors[from.exercise.path],
+        x1: parentPos.x, y1: parentPos.y,
+        x2: childPos.x, y2: childPos.y,
+        color: childEx ? pathColors[childEx.path] : (parentPos.exercise ? pathColors[parentPos.exercise.path] : "#FFFFFF"),
       });
     }
   }
