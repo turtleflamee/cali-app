@@ -6,7 +6,10 @@ import {
   StyleSheet,
   Platform,
   Linking,
+  Dimensions,
 } from "react-native";
+
+const { width: WIN_W, height: WIN_H } = Dimensions.get("window");
 import { useFocusEffect } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors } from "../../data/theme";
@@ -97,16 +100,29 @@ function NativeCamera() {
   const processPose = useCallback((pose: any) => {
     setPoseFrames(f => f + 1);
     if (!pose || typeof pose !== "object") { setDebugInfo("No pose data"); setPoints(null); return; }
+
+    // Check for error from native
+    if (pose._error) { setDebugInfo(`Native error: ${pose._error}`); setPoints(null); return; }
+
+    // Get frame dimensions for scaling
+    const fw = pose._frameWidth || 1;
+    const fh = pose._frameHeight || 1;
+
     const pts: Points = {};
     for (const [key, val] of Object.entries(pose)) {
+      if (key.startsWith("_")) continue; // skip metadata
       const v = val as any;
       if (v && typeof v.x === "number" && typeof v.y === "number") {
-        pts[key] = { x: v.x, y: v.y };
+        // Scale from image coordinates to screen coordinates
+        pts[key] = {
+          x: (v.x / fw) * WIN_W,
+          y: (v.y / fh) * WIN_H,
+        };
       }
     }
     const count = Object.keys(pts).length;
-    if (count < 5) { setDebugInfo(`Only ${count} points detected`); setPoints(null); return; }
-    setDebugInfo(`${count} points | ${Object.keys(pts).join(",")}`);
+    if (count < 5) { setDebugInfo(`${count} pts (fw:${fw} fh:${fh})`); setPoints(null); return; }
+    setDebugInfo(`${count} pts scaled (${Math.round(fw)}x${Math.round(fh)})`);
     setPoints(pts);
 
     if (!isRunning) return;

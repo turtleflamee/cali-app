@@ -9,6 +9,7 @@ const path = require("path");
 const MLKIT_POSE_PLUGIN_KT = `
 package com.fjodor010.calysthenics
 
+import android.util.Log
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.pose.Pose
 import com.google.mlkit.vision.pose.PoseDetection
@@ -22,6 +23,7 @@ import com.mrousavy.camera.frameprocessors.VisionCameraProxy
 
 class MLKitPosePlugin(proxy: VisionCameraProxy, options: Map<String, Any>?) : FrameProcessorPlugin() {
 
+  private val TAG = "MLKitPose"
   private val poseDetector: PoseDetector = PoseDetection.getClient(
     PoseDetectorOptions.Builder()
       .setDetectorMode(PoseDetectorOptions.STREAM_MODE)
@@ -30,19 +32,38 @@ class MLKitPosePlugin(proxy: VisionCameraProxy, options: Map<String, Any>?) : Fr
 
   override fun callback(frame: Frame, params: Map<String, Any>?): Any? {
     return try {
-      if (!frame.getIsValid()) return null
+      if (!frame.getIsValid()) {
+        Log.d(TAG, "Frame invalid")
+        return null
+      }
 
-      val mediaImage = frame.getImage() ?: return null
-      val orientation = frame.getOrientation()
-      val rotationDegrees = orientation.toSurfaceRotation() * 90
+      // Use getImageProxy() to get the CameraX ImageProxy
+      val imageProxy = frame.getImageProxy()
+      val mediaImage = imageProxy.image
+      if (mediaImage == null) {
+        Log.d(TAG, "mediaImage is null")
+        return null
+      }
+
+      // Get rotation from the imageProxy itself
+      val rotationDegrees = imageProxy.imageInfo.rotationDegrees
 
       val inputImage = InputImage.fromMediaImage(mediaImage, rotationDegrees)
       val pose: Pose = Tasks.await(poseDetector.process(inputImage))
 
       val landmarks = pose.allPoseLandmarks
+      Log.d(TAG, "Detected landmarks count: " + landmarks.size)
       if (landmarks.isEmpty()) return null
 
+      // Get frame dimensions for coordinate scaling
+      val frameWidth = frame.getWidth()
+      val frameHeight = frame.getHeight()
+
       val result = HashMap<String, Any>()
+      // Add frame size for JS-side scaling
+      result["_frameWidth"] = frameWidth.toDouble()
+      result["_frameHeight"] = frameHeight.toDouble()
+
       for (landmark in landmarks) {
         val name = when (landmark.landmarkType) {
           PoseLandmark.NOSE -> "nose"
@@ -66,9 +87,14 @@ class MLKitPosePlugin(proxy: VisionCameraProxy, options: Map<String, Any>?) : Fr
         point["y"] = landmark.position.y.toDouble()
         result[name] = point
       }
+      Log.d(TAG, "Returning result with keys: " + result.keys.joinToString(","))
       result
     } catch (e: Exception) {
-      null
+      Log.e(TAG, "Error in callback: " + e.message, e)
+      // Return error info to JS for debugging
+      val err = HashMap<String, Any>()
+      err["_error"] = e.message ?: "unknown"
+      err
     }
   }
 }
