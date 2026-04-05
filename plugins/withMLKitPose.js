@@ -32,21 +32,10 @@ class MLKitPosePlugin(proxy: VisionCameraProxy, options: Map<String, Any>?) : Fr
 
   override fun callback(frame: Frame, params: Map<String, Any>?): Any? {
     return try {
-      if (!frame.getIsValid()) {
-        Log.d(TAG, "Frame invalid")
-        return null
-      }
+      if (!frame.getIsValid()) return null
 
-      // Use getImageProxy() to get the CameraX ImageProxy
-      val imageProxy = frame.getImageProxy()
-      val mediaImage = imageProxy.image
-      if (mediaImage == null) {
-        Log.d(TAG, "mediaImage is null")
-        return null
-      }
-
-      // Get rotation from the imageProxy itself
-      val rotationDegrees = imageProxy.imageInfo.rotationDegrees
+      val mediaImage = frame.getImage() ?: return null
+      val rotationDegrees = frame.getOrientation().toSurfaceRotation() * 90
 
       val inputImage = InputImage.fromMediaImage(mediaImage, rotationDegrees)
       val pose: Pose = Tasks.await(poseDetector.process(inputImage))
