@@ -80,6 +80,8 @@ function NativeCamera() {
   const [repCount, setRepCount] = useState(0);
   const [position, setPosition] = useState<"up"|"down">("up");
   const [feedback, setFeedback] = useState("Get into position");
+  const [poseFrames, setPoseFrames] = useState(0);
+  const [debugInfo, setDebugInfo] = useState("");
   const wentDown = useRef(false);
   const timerRef = useRef<any>(null);
   const [elapsed, setElapsed] = useState(0);
@@ -93,7 +95,8 @@ function NativeCamera() {
 
   // Pose processing (called from JS side via runOnJS or directly)
   const processPose = useCallback((pose: any) => {
-    if (!pose || typeof pose !== "object") { setPoints(null); return; }
+    setPoseFrames(f => f + 1);
+    if (!pose || typeof pose !== "object") { setDebugInfo("No pose data"); setPoints(null); return; }
     const pts: Points = {};
     for (const [key, val] of Object.entries(pose)) {
       const v = val as any;
@@ -101,7 +104,9 @@ function NativeCamera() {
         pts[key] = { x: v.x, y: v.y };
       }
     }
-    if (Object.keys(pts).length < 5) { setPoints(null); return; }
+    const count = Object.keys(pts).length;
+    if (count < 5) { setDebugInfo(`Only ${count} points detected`); setPoints(null); return; }
+    setDebugInfo(`${count} points | ${Object.keys(pts).join(",")}`);
     setPoints(pts);
 
     if (!isRunning) return;
@@ -234,7 +239,7 @@ function NativeCamera() {
       {isRunning && <View style={styles.fbBanner}><Text style={styles.fbTxt}>{feedback}</Text></View>}
 
       {/* Mode indicator */}
-      {!isRunning && <View style={styles.fbBanner}><Text style={styles.fbTxt}>{hasPose?"Skeleton tracking active":`Tap mode: ${poseError}`}</Text></View>}
+      {!isRunning && <View style={styles.fbBanner}><Text style={styles.fbTxt}>{hasPose?`Skeleton ON | Frames: ${poseFrames} | ${debugInfo}`:`Tap mode: ${poseError}`}</Text></View>}
 
       {/* Bottom */}
       <View style={[styles.botOverlay,{paddingBottom:insets.bottom+20}]}>
