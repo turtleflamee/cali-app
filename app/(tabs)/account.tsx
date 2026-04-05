@@ -48,7 +48,7 @@ export default function AccountScreen() {
     }
     // Second tap — actually reset
     await resetProfile();
-    router.replace("/onboarding");
+    router.replace("/");
   };
 
   return (

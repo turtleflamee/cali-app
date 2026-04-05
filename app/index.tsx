@@ -1,23 +1,32 @@
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
-import { hasOnboarded } from "../data/storage";
+import { hasOnboarded, saveProfile, getProfile } from "../data/storage";
 
 export default function Index() {
-  const [checked, setChecked] = useState(false);
-  const [onboarded, setOnboarded] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    hasOnboarded().then((val) => {
-      setOnboarded(val);
-      setChecked(true);
-    });
+    (async () => {
+      const onboarded = await hasOnboarded();
+      if (!onboarded) {
+        // Skip onboarding — create fresh profile assuming they can't do anything
+        await saveProfile({
+          goal: "both",
+          assessedLevels: {
+            push: 0, pull: 0, core: 0, legs: 0,
+            skills: 0, rings: 0, breakdance: 0, flexibility: 0,
+          },
+          completedExercises: [],
+          completedMilestones: [],
+          streak: 0,
+          lastTrainedDate: null,
+        });
+      }
+      setReady(true);
+    })();
   }, []);
 
-  if (!checked) return null;
+  if (!ready) return null;
 
-  if (onboarded) {
-    return <Redirect href="/(tabs)/timeline" />;
-  }
-
-  return <Redirect href="/onboarding" />;
+  return <Redirect href="/(tabs)/timeline" />;
 }
