@@ -60,10 +60,15 @@ function NativeCamera() {
 
   // Try to init the ML Kit pose plugin
   let posePlugin: any = null;
+  let poseError = "";
   try {
     posePlugin = VisionCameraProxy.initFrameProcessorPlugin("mlkitPose", {});
-  } catch {}
+    if (!posePlugin) poseError = "Plugin 'mlkitPose' not found in registry";
+  } catch (e: any) {
+    poseError = e?.message || "Unknown error loading pose plugin";
+  }
   const hasPose = posePlugin != null && hasFrameProcessor;
+  if (!hasFrameProcessor) poseError = "useFrameProcessor not available";
 
   const { hasPermission, requestPermission } = useCameraPermission();
   const [facing, setFacing] = useState<"back"|"front">("back");
@@ -229,7 +234,7 @@ function NativeCamera() {
       {isRunning && <View style={styles.fbBanner}><Text style={styles.fbTxt}>{feedback}</Text></View>}
 
       {/* Mode indicator */}
-      {!isRunning && <View style={styles.fbBanner}><Text style={styles.fbTxt}>{hasPose?"Skeleton tracking active":"Tap mode (no skeleton)"}</Text></View>}
+      {!isRunning && <View style={styles.fbBanner}><Text style={styles.fbTxt}>{hasPose?"Skeleton tracking active":`Tap mode: ${poseError}`}</Text></View>}
 
       {/* Bottom */}
       <View style={[styles.botOverlay,{paddingBottom:insets.bottom+20}]}>
