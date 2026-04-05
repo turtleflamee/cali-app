@@ -30,9 +30,10 @@ export default function RootLayout() {
         <Stack.Screen
           name="exercise/[id]"
           options={{
-            presentation: "modal",
+            presentation: "containedModal",
             headerTitle: "Exercise",
             headerStyle: { backgroundColor: colors.card },
+            animation: "slide_from_bottom",
           }}
         />
         <Stack.Screen
