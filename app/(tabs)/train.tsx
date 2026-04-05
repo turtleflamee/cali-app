@@ -10,6 +10,7 @@ import { useRouter, useFocusEffect } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { exercises, PathName } from "../../data/exercises";
 import { getProfile, UserProfile } from "../../data/storage";
+import { getVisibleExercises } from "../../data/unlock-tree";
 import { getExerciseMilestoneProgress, getMilestones } from "../../data/milestones";
 import { colors, pathColors, pathIcons } from "../../data/theme";
 
@@ -53,10 +54,11 @@ export default function TrainScreen() {
         </Text>
 
         {paths.map((path) => {
-          const assessedLevel = profile.assessedLevels[path];
-          // Find the next exercise to work on: easiest exercise above assessed level
+          // Find next exercise: visible on this path but not completed
+          const visibleSet = getVisibleExercises(profile.completedExercises);
+          const completedSet = new Set(profile.completedExercises);
           const nextExercise = exercises
-            .filter((e) => e.path === path && e.difficulty > assessedLevel)
+            .filter((e) => e.path === path && visibleSet.has(e.id) && !completedSet.has(e.id))
             .sort((a, b) => a.difficulty - b.difficulty)[0] ?? null;
           const pathColor = pathColors[path];
 
