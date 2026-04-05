@@ -619,14 +619,25 @@ export default function SkillWeb({ profile }: Props) {
                       pointerEvents="none"
                     />
                   )}
-                  <Text
-                    style={[styles.nodeName, { color: isCompleted ? "#FFFFFF" : colors.text }]}
-                    numberOfLines={3}
-                    adjustsFontSizeToFit
-                    minimumFontScale={0.7}
-                  >
-                    {ex.name}
-                  </Text>
+                  {/* Text outline — dark shadow copies behind */}
+                  <View style={styles.nodeTextWrap}>
+                    <Text
+                      style={[styles.nodeNameOutline]}
+                      numberOfLines={3}
+                      adjustsFontSizeToFit
+                      minimumFontScale={0.7}
+                    >
+                      {ex.name}
+                    </Text>
+                    <Text
+                      style={[styles.nodeName, styles.nodeNameTop]}
+                      numberOfLines={3}
+                      adjustsFontSizeToFit
+                      minimumFontScale={0.7}
+                    >
+                      {ex.name}
+                    </Text>
+                  </View>
                 </TouchableOpacity>
               );
             })}
@@ -807,12 +818,39 @@ const styles = StyleSheet.create({
     fontSize: 8,
     color: "#FFFFFF",
   },
-  nodeName: {
-    color: colors.text,
-    fontSize: 8,
-    fontWeight: "800",
-    lineHeight: 10,
+  nodeTextWrap: {
+    position: "relative",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  nodeNameOutline: {
+    color: "#000000",
+    fontSize: 9,
+    fontWeight: "900",
+    lineHeight: 12,
     textAlign: "center",
+    letterSpacing: 0.3,
+    textShadowColor: "#000000",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 4,
+  },
+  nodeName: {
+    color: "#FFFFFF",
+    fontSize: 9,
+    fontWeight: "900",
+    lineHeight: 12,
+    textAlign: "center",
+    letterSpacing: 0.3,
+    textShadowColor: "#000000",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 2,
+  },
+  nodeNameTop: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
   },
   zoomControls: {
     position: "absolute",
