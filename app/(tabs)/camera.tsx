@@ -74,7 +74,7 @@ function NativeCamera() {
   if (!hasFrameProcessor) poseError = "useFrameProcessor not available";
 
   const { hasPermission, requestPermission } = useCameraPermission();
-  const [facing, setFacing] = useState<"back"|"front">("back");
+  const [facing, setFacing] = useState<"back"|"front">("front");
   const device = useCameraDevice(facing);
   const [isActive, setIsActive] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
@@ -102,12 +102,16 @@ function NativeCamera() {
     if (!pose || typeof pose !== "object") { setDebugInfo("No pose data"); setPoints(null); return; }
 
     // Check for error from native
-    if (pose._error) { setDebugInfo(`Native: ${pose._error}`); setPoints(null); return; }
+    if (pose._error) { setDebugInfo(`ERR: ${pose._error}`); setPoints(null); return; }
 
     // Get frame dimensions and landmark count from native
     const fw = pose._fw || 1;
     const fh = pose._fh || 1;
     const nativeCount = pose._count || 0;
+
+    // Show all keys for debugging
+    const allKeys = Object.keys(pose).filter(k => !k.startsWith("_")).join(",");
+    if (!allKeys) { setDebugInfo(`ML Kit: ${nativeCount} native, no keys (${Math.round(fw)}x${Math.round(fh)})`); setPoints(null); return; }
 
     // Parse flat keys: "leftShoulder_x", "leftShoulder_y" → { leftShoulder: {x, y} }
     const pts: Points = {};
@@ -219,7 +223,6 @@ function NativeCamera() {
         device={device}
         isActive={isActive}
         frameProcessor={frameProcessor}
-        pixelFormat="yuv"
       />
 
       {/* Skeleton overlay */}
