@@ -41,8 +41,8 @@ import {
 
 const { width: SCREEN_W, height: SCREEN_H } = Dimensions.get("window");
 
-const CANVAS_W = 4000;
-const CANVAS_H = 4000;
+const CANVAS_W = 2000;
+const CANVAS_H = 2000;
 const CX = CANVAS_W / 2;
 const CY = CANVAS_H / 2;
 
@@ -99,7 +99,7 @@ function buildNodePositions(): Map<string, NodePos> {
   const positions = new Map<string, NodePos>();
   positions.set("__start__", { x: CX, y: CY, isStart: true });
 
-  const STEP_DIST = 300; // px per depth level
+  const STEP_DIST = 150; // px per depth level
   const FAN_ANGLE = 15; // degrees offset for each sibling
 
   // Store each node's angle so children can inherit/offset from it
