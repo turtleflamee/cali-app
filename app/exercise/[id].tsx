@@ -11,9 +11,9 @@ import {
 } from "react-native";
 import { useLocalSearchParams, Stack, useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { getExerciseById, getVideoSearchUrl, getExercisesBySubPath, exercises, gatewayExercises, getCategory, categoryPaths, pathSubPaths } from "../../data/exercises";
+import { getExerciseById, getVideoSearchUrl, exercises } from "../../data/exercises";
 import { getProfile, markExerciseComplete, UserProfile } from "../../data/storage";
-import { getUnlocks } from "../../data/unlock-tree";
+import { getUnlocks, getVisibleExercises } from "../../data/unlock-tree";
 import { colors, pathColors } from "../../data/theme";
 
 let ConfettiCannon: any = null;
@@ -50,27 +50,9 @@ export default function ExerciseDetail() {
 
   const pathColor = pathColors[exercise.path];
 
-  // Determine if unlocked: gateway exercises always unlocked, first in sub-path unlocked if gateway done,
-  // or if previous exercise in sub-path chain is completed
-  const isUnlocked = (): boolean => {
-    if (!profile) return false;
-    const isGateway = Object.values(gatewayExercises).includes(exercise.id);
-    if (isGateway) return true;
-    // First exercise in sub-path: unlocked if gateway is completed
-    const subExercises = getExercisesBySubPath(exercise.subPath);
-    if (subExercises.length > 0 && subExercises[0].id === exercise.id) {
-      const cat = getCategory(exercise.path);
-      const gwId = gatewayExercises[cat];
-      return profile.completedExercises.includes(gwId);
-    }
-    // Otherwise: unlocked if difficulty check passes OR previous in sub-path is completed
-    if (exercise.difficulty <= profile.assessedLevels[exercise.path]) return true;
-    // Check if the exercise right before this one in the sub-path is completed
-    const idx = subExercises.findIndex(e => e.id === exercise.id);
-    if (idx > 0 && profile.completedExercises.includes(subExercises[idx - 1].id)) return true;
-    return false;
-  };
-  const unlocked = isUnlocked();
+  // Unlocked = visible in the unlock tree (completed or current)
+  const visibleSet = profile ? getVisibleExercises(profile.completedExercises) : new Set<string>();
+  const unlocked = visibleSet.has(exercise.id);
 
   const [showCelebration, setShowCelebration] = useState(false);
   const [unlockedExercises, setUnlockedExercises] = useState<string[]>([]);
