@@ -50,6 +50,12 @@
         "projectId": "c7eaefcc-2074-433f-a4ff-533338639afe"
       }
     },
-    "owner": "fjodor010"
+    "owner": "fjodor010",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c7eaefcc-2074-433f-a4ff-533338639afe"
+    }
   }
 }
