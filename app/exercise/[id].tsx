@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -6,12 +6,20 @@ import {
   ScrollView,
   TouchableOpacity,
   Linking,
+  Animated,
+  Dimensions,
 } from "react-native";
-import { useLocalSearchParams, Stack } from "expo-router";
+import { useLocalSearchParams, Stack, useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { getExerciseById, getVideoSearchUrl, getExercisesBySubPath, exercises, gatewayExercises, getCategory, categoryPaths, pathSubPaths } from "../../data/exercises";
 import { getProfile, markExerciseComplete, UserProfile } from "../../data/storage";
+import { getUnlocks } from "../../data/unlock-tree";
 import { colors, pathColors } from "../../data/theme";
+
+let ConfettiCannon: any = null;
+try { ConfettiCannon = require("react-native-confetti-cannon"); } catch {}
+
+const { width: WIN_W, height: WIN_H } = Dimensions.get("window");
 
 export default function ExerciseDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -61,10 +69,82 @@ export default function ExerciseDetail() {
   };
   const unlocked = isUnlocked();
 
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [unlockedExercises, setUnlockedExercises] = useState<string[]>([]);
+  const confettiRef = useRef<any>(null);
+  const router = useRouter();
+  const celebrationScale = useRef(new Animated.Value(0)).current;
+
   const handleComplete = async () => {
+    // Get what this exercise unlocks BEFORE marking complete
+    const unlocks = getUnlocks(exercise.id);
+    const unlockedNames = unlocks
+      .map(id => exercises.find(e => e.id === id))
+      .filter(Boolean)
+      .map(e => e!.name);
+
     await markExerciseComplete(exercise.id);
     setCompleted(true);
+    setUnlockedExercises(unlockedNames);
+    setShowCelebration(true);
+
+    // Animate celebration
+    Animated.spring(celebrationScale, {
+      toValue: 1,
+      friction: 4,
+      tension: 50,
+      useNativeDriver: true,
+    }).start();
+
+    // Fire confetti
+    setTimeout(() => confettiRef.current?.start(), 200);
   };
+
+  if (showCelebration) {
+    return (
+      <>
+        <Stack.Screen options={{ headerTitle: "Completed!" }} />
+        <View style={[styles.container, styles.celebrationContainer]}>
+          {ConfettiCannon && (
+            <ConfettiCannon
+              ref={confettiRef}
+              count={80}
+              origin={{ x: WIN_W / 2, y: -20 }}
+              autoStart={true}
+              fadeOut={true}
+              fallSpeed={2500}
+              colors={[pathColor, "#FFD700", "#00C851", "#FFFFFF", "#FF69B4"]}
+            />
+          )}
+          <Animated.View style={[styles.celebrationContent, { transform: [{ scale: celebrationScale }] }]}>
+            <Text style={styles.celebrationEmoji}>🎉</Text>
+            <Text style={styles.celebrationTitle}>Exercise Mastered!</Text>
+            <Text style={styles.celebrationExName}>{exercise.name}</Text>
+
+            {unlockedExercises.length > 0 && (
+              <View style={styles.unlockedSection}>
+                <Text style={styles.unlockedTitle}>New paths unlocked:</Text>
+                {unlockedExercises.map((name, i) => (
+                  <View key={i} style={[styles.unlockedItem, { borderLeftColor: pathColor }]}>
+                    <Text style={styles.unlockedIcon}>🔓</Text>
+                    <Text style={styles.unlockedName}>{name}</Text>
+                  </View>
+                ))}
+              </View>
+            )}
+
+            <TouchableOpacity
+              style={[styles.celebrationBtn, { backgroundColor: pathColor }]}
+              onPress={() => router.back()}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.celebrationBtnText}>Back to Web</Text>
+            </TouchableOpacity>
+          </Animated.View>
+        </View>
+      </>
+    );
+  }
 
   return (
     <>
@@ -359,5 +439,71 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     marginTop: 40,
+  },
+  // Celebration styles
+  celebrationContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 32,
+  },
+  celebrationContent: {
+    alignItems: "center",
+    width: "100%",
+  },
+  celebrationEmoji: {
+    fontSize: 64,
+    marginBottom: 16,
+  },
+  celebrationTitle: {
+    fontSize: 28,
+    fontWeight: "900",
+    color: colors.text,
+    marginBottom: 8,
+  },
+  celebrationExName: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: colors.textDim,
+    marginBottom: 32,
+  },
+  unlockedSection: {
+    width: "100%",
+    marginBottom: 32,
+  },
+  unlockedTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: colors.text,
+    marginBottom: 12,
+    textAlign: "center",
+  },
+  unlockedItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.card,
+    borderRadius: 12,
+    borderLeftWidth: 4,
+    padding: 14,
+    marginBottom: 8,
+    gap: 10,
+  },
+  unlockedIcon: {
+    fontSize: 18,
+  },
+  unlockedName: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: colors.text,
+  },
+  celebrationBtn: {
+    borderRadius: 14,
+    paddingVertical: 16,
+    paddingHorizontal: 40,
+    alignItems: "center",
+  },
+  celebrationBtnText: {
+    color: colors.text,
+    fontSize: 18,
+    fontWeight: "700",
   },
 });

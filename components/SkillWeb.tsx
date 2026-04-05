@@ -14,7 +14,7 @@ import {
   Gesture,
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
-import Svg, { Line } from "react-native-svg";
+import Svg, { Line, Defs, LinearGradient, Stop } from "react-native-svg";
 import { useRouter } from "expo-router";
 import {
   exercises,
@@ -451,17 +451,25 @@ export default function SkillWeb({ profile }: Props) {
               height={CANVAS_H}
               style={StyleSheet.absoluteFill}
             >
-              {/* Progression edges — dark outline behind */}
+              {/* Progression edges — glow layer */}
+              {progressionLines.map((line, i) => (
+                <Line
+                  key={`prog-glow-${i}`}
+                  x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2}
+                  stroke={line.color}
+                  strokeWidth={12}
+                  strokeOpacity={0.15}
+                  strokeLinecap="round"
+                />
+              ))}
+              {/* Progression edges — dark outline */}
               {progressionLines.map((line, i) => (
                 <Line
                   key={`prog-outline-${i}`}
-                  x1={line.x1}
-                  y1={line.y1}
-                  x2={line.x2}
-                  y2={line.y2}
+                  x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2}
                   stroke="#000000"
-                  strokeWidth={8}
-                  strokeOpacity={0.6}
+                  strokeWidth={6}
+                  strokeOpacity={0.5}
                   strokeLinecap="round"
                 />
               ))}
@@ -469,44 +477,34 @@ export default function SkillWeb({ profile }: Props) {
               {progressionLines.map((line, i) => (
                 <Line
                   key={`prog-${i}`}
-                  x1={line.x1}
-                  y1={line.y1}
-                  x2={line.x2}
-                  y2={line.y2}
+                  x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2}
                   stroke={line.color}
-                  strokeWidth={4}
-                  strokeOpacity={0.9}
+                  strokeWidth={3}
+                  strokeOpacity={1}
                   strokeLinecap="round"
                 />
               ))}
 
-              {/* Cross-links -- dashed lines with outline */}
+              {/* Cross-links — glow + outline + line */}
               {crossLinkLines.map((line, i) => (
                 <Line
-                  key={`cross-outline-${i}`}
-                  x1={line.x1}
-                  y1={line.y1}
-                  x2={line.x2}
-                  y2={line.y2}
-                  stroke="#000000"
-                  strokeWidth={5}
-                  strokeOpacity={0.4}
+                  key={`cross-glow-${i}`}
+                  x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2}
+                  stroke="#8888CC"
+                  strokeWidth={8}
+                  strokeOpacity={0.1}
                   strokeLinecap="round"
-                  strokeDasharray="10,8"
                 />
               ))}
               {crossLinkLines.map((line, i) => (
                 <Line
                   key={`cross-${i}`}
-                  x1={line.x1}
-                  y1={line.y1}
-                  x2={line.x2}
-                  y2={line.y2}
-                  stroke="#AAAACC"
-                  strokeWidth={2.5}
-                  strokeOpacity={0.5}
+                  x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2}
+                  stroke="#AAAADD"
+                  strokeWidth={2}
+                  strokeOpacity={0.6}
                   strokeLinecap="round"
-                  strokeDasharray="10,8"
+                  strokeDasharray="6,6"
                 />
               ))}
             </Svg>
