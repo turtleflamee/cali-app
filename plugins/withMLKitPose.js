@@ -49,9 +49,9 @@ class MLKitPosePlugin(proxy: VisionCameraProxy, options: Map<String, Any>?) : Fr
       val frameHeight = frame.getHeight()
 
       val result = HashMap<String, Any>()
-      // Add frame size for JS-side scaling
-      result["_frameWidth"] = frameWidth.toDouble()
-      result["_frameHeight"] = frameHeight.toDouble()
+      result["_fw"] = frameWidth.toDouble()
+      result["_fh"] = frameHeight.toDouble()
+      result["_count"] = landmarks.size.toDouble()
 
       for (landmark in landmarks) {
         val name = when (landmark.landmarkType) {
@@ -71,18 +71,16 @@ class MLKitPosePlugin(proxy: VisionCameraProxy, options: Map<String, Any>?) : Fr
           else -> null
         } ?: continue
 
-        val point = HashMap<String, Any>()
-        point["x"] = landmark.position.x.toDouble()
-        point["y"] = landmark.position.y.toDouble()
-        result[name] = point
+        // Use flat keys instead of nested maps for JSI compatibility
+        result[name + "_x"] = landmark.position.x.toDouble()
+        result[name + "_y"] = landmark.position.y.toDouble()
       }
-      Log.d(TAG, "Returning result with keys: " + result.keys.joinToString(","))
+      Log.d(TAG, "Returning " + landmarks.size + " landmarks, keys: " + result.keys.joinToString(","))
       result
     } catch (e: Exception) {
-      Log.e(TAG, "Error in callback: " + e.message, e)
-      // Return error info to JS for debugging
+      Log.e(TAG, "Error: " + e.message, e)
       val err = HashMap<String, Any>()
-      err["_error"] = e.message ?: "unknown"
+      err["_error"] = (e.message ?: "unknown error")
       err
     }
   }
