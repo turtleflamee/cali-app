@@ -123,16 +123,18 @@ function NativeCamera() {
   let frameProcessor: any = undefined;
   if (hasPose && useFrameProcessor) {
     try {
-      const { runOnJS } = require("react-native-worklets-core");
+      const { Worklets } = require("react-native-worklets-core");
+      const runPoseOnJS = Worklets.createRunOnJS(processPose);
+
       frameProcessor = useFrameProcessor((frame: any) => {
         "worklet";
         const result = posePlugin!.call(frame);
         if (result) {
-          runOnJS(processPose)(result);
+          runPoseOnJS(result);
         }
-      }, [processPose]);
-    } catch {
-      // worklets not available
+      }, [runPoseOnJS]);
+    } catch (e: any) {
+      console.warn("Frame processor setup failed:", e?.message);
     }
   }
 
