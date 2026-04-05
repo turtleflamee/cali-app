@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useMemo } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Linking,
   Alert,
+  Animated,
 } from "react-native";
 import {
   GestureDetector,
@@ -368,20 +369,20 @@ interface Props {
 export default function SkillWeb({ profile }: Props) {
   const router = useRouter();
 
-  const offsetRef = useRef({
-    x: -(CX - SCREEN_W / 2),
-    y: -(CY - SCREEN_H / 2 - 50),
-  });
-  const scaleRef = useRef(0.35);
-  const [, setRenderKey] = useState(0);
-  const rerender = () => setRenderKey((n) => n + 1);
+  // Use Animated values for smooth native-thread panning
+  const translateX = useRef(new Animated.Value(-(CX - SCREEN_W / 2))).current;
+  const translateY = useRef(new Animated.Value(-(CY - SCREEN_H / 2 - 50))).current;
+  const scaleAnim = useRef(new Animated.Value(0.35)).current;
 
+  const offsetRef = useRef({ x: -(CX - SCREEN_W / 2), y: -(CY - SCREEN_H / 2 - 50) });
+  const scaleRef = useRef(0.35);
   const savedOffset = useRef({ x: offsetRef.current.x, y: offsetRef.current.y });
   const savedScale = useRef(0.35);
   const isDragging = useRef(false);
 
-  const offset = offsetRef.current;
-  const scale = scaleRef.current;
+  // Scale is only needed for node sizing / checkpoint visibility — update sparingly
+  const [scaleState, setScaleState] = useState(0.35);
+  const scale = scaleState;
 
   const panGesture = Gesture.Pan()
     .minPointers(1)
@@ -392,16 +393,14 @@ export default function SkillWeb({ profile }: Props) {
     })
     .onUpdate((e) => {
       isDragging.current = true;
-      offsetRef.current = {
-        x: savedOffset.current.x + e.translationX,
-        y: savedOffset.current.y + e.translationY,
-      };
-      rerender();
+      const newX = savedOffset.current.x + e.translationX;
+      const newY = savedOffset.current.y + e.translationY;
+      offsetRef.current = { x: newX, y: newY };
+      translateX.setValue(newX);
+      translateY.setValue(newY);
     })
     .onEnd(() => {
-      setTimeout(() => {
-        isDragging.current = false;
-      }, 100);
+      setTimeout(() => { isDragging.current = false; }, 100);
     });
 
   const pinchGesture = Gesture.Pinch()
@@ -409,8 +408,13 @@ export default function SkillWeb({ profile }: Props) {
       savedScale.current = scaleRef.current;
     })
     .onUpdate((e) => {
-      scaleRef.current = Math.max(0.2, Math.min(5, savedScale.current * e.scale));
-      rerender();
+      const newScale = Math.max(0.2, Math.min(5, savedScale.current * e.scale));
+      scaleRef.current = newScale;
+      scaleAnim.setValue(newScale);
+    })
+    .onEnd(() => {
+      // Only trigger React re-render on pinch END (for checkpoint visibility etc)
+      setScaleState(scaleRef.current);
     });
 
   const composedGesture = Gesture.Simultaneous(panGesture, pinchGesture);
@@ -429,14 +433,14 @@ export default function SkillWeb({ profile }: Props) {
     <GestureHandlerRootView style={styles.container}>
       <GestureDetector gesture={composedGesture}>
         <View style={styles.container}>
-          <View
+          <Animated.View
             style={[
               styles.canvas,
               {
                 transform: [
-                  { translateX: offset.x },
-                  { translateY: offset.y },
-                  { scale },
+                  { translateX: translateX },
+                  { translateY: translateY },
+                  { scale: scaleAnim },
                 ],
               },
             ]}
@@ -713,15 +717,17 @@ export default function SkillWeb({ profile }: Props) {
                   </View>
                 );
               })}
-          </View>
+          </Animated.View>
 
           {/* Zoom controls */}
           <View style={styles.zoomControls}>
             <TouchableOpacity
               style={styles.zoomBtn}
               onPress={() => {
-                scaleRef.current = Math.min(5, scaleRef.current + 0.15);
-                rerender();
+                const s = Math.min(5, scaleRef.current + 0.15);
+                scaleRef.current = s;
+                scaleAnim.setValue(s);
+                setScaleState(s);
               }}
             >
               <Text style={styles.zoomText}>+</Text>
@@ -729,8 +735,10 @@ export default function SkillWeb({ profile }: Props) {
             <TouchableOpacity
               style={styles.zoomBtn}
               onPress={() => {
-                scaleRef.current = Math.max(0.2, scaleRef.current - 0.15);
-                rerender();
+                const s = Math.max(0.2, scaleRef.current - 0.15);
+                scaleRef.current = s;
+                scaleAnim.setValue(s);
+                setScaleState(s);
               }}
             >
               <Text style={styles.zoomText}>&#x2212;</Text>
