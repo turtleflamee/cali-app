@@ -17,7 +17,10 @@ import { getUnlocks } from "../../data/unlock-tree";
 import { colors, pathColors } from "../../data/theme";
 
 let ConfettiCannon: any = null;
-try { ConfettiCannon = require("react-native-confetti-cannon"); } catch {}
+try {
+  const mod = require("react-native-confetti-cannon");
+  ConfettiCannon = mod.default || mod;
+} catch {}
 
 const { width: WIN_W, height: WIN_H } = Dimensions.get("window");
 
