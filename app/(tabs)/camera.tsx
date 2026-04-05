@@ -58,12 +58,8 @@ function NativeCamera() {
     return <View style={[styles.container,styles.center]}><Text style={styles.statusText}>Camera not available.</Text></View>;
   }
 
-  // Try to init the ML Kit pose plugin
-  let posePlugin: any = null;
-  try {
-    posePlugin = VisionCameraProxy.initFrameProcessorPlugin("mlkitPose", {});
-  } catch {}
-  const hasPose = posePlugin != null && hasFrameProcessor;
+  // Pose detection is handled via frame processor if available
+  const hasPose = false; // Disabled until worklet compilation is fixed
 
   const { hasPermission, requestPermission } = useCameraPermission();
   const [facing, setFacing] = useState<"back"|"front">("back");
@@ -119,22 +115,7 @@ function NativeCamera() {
     }
   }, [isRunning, position]);
 
-  // Frame processor — runs on worklet thread if available
-  let frameProcessor: any = undefined;
-  if (hasPose && useFrameProcessor) {
-    try {
-      const { runOnJS } = require("react-native-worklets-core");
-      frameProcessor = useFrameProcessor((frame: any) => {
-        "worklet";
-        const result = posePlugin!.call(frame);
-        if (result) {
-          runOnJS(processPose)(result);
-        }
-      }, [processPose]);
-    } catch {
-      // worklets not available, fall through to tap mode
-    }
-  }
+  const frameProcessor = undefined;
 
   const handleTap = () => {
     if (!isRunning) return;
