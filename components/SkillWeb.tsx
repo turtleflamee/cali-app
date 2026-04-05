@@ -14,7 +14,7 @@ import {
   Gesture,
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
-import Svg, { Line, Defs, LinearGradient, Stop } from "react-native-svg";
+// SVG removed — using View-based lines to avoid Android bitmap crash
 import { useRouter } from "expo-router";
 import {
   exercises,
@@ -445,69 +445,54 @@ export default function SkillWeb({ profile }: Props) {
               },
             ]}
           >
-            {/* Connection lines */}
-            <Svg
-              width={CANVAS_W}
-              height={CANVAS_H}
-              style={StyleSheet.absoluteFill}
-            >
-              {/* Progression edges — glow layer */}
-              {progressionLines.map((line, i) => (
-                <Line
-                  key={`prog-glow-${i}`}
-                  x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2}
-                  stroke={line.color}
-                  strokeWidth={12}
-                  strokeOpacity={0.15}
-                  strokeLinecap="round"
+            {/* Connection lines — rendered as rotated Views (no SVG bitmap) */}
+            {progressionLines.map((line, i) => {
+              const dx = line.x2 - line.x1;
+              const dy = line.y2 - line.y1;
+              const length = Math.sqrt(dx * dx + dy * dy);
+              const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+              return (
+                <View
+                  key={`line-${i}`}
+                  style={{
+                    position: "absolute",
+                    left: line.x1,
+                    top: line.y1 - 1.5,
+                    width: length,
+                    height: 3,
+                    backgroundColor: line.color,
+                    opacity: 0.8,
+                    borderRadius: 1.5,
+                    transform: [{ rotate: `${angle}deg` }],
+                    transformOrigin: "left center",
+                  }}
                 />
-              ))}
-              {/* Progression edges — dark outline */}
-              {progressionLines.map((line, i) => (
-                <Line
-                  key={`prog-outline-${i}`}
-                  x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2}
-                  stroke="#000000"
-                  strokeWidth={6}
-                  strokeOpacity={0.5}
-                  strokeLinecap="round"
-                />
-              ))}
-              {/* Progression edges — colored line on top */}
-              {progressionLines.map((line, i) => (
-                <Line
-                  key={`prog-${i}`}
-                  x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2}
-                  stroke={line.color}
-                  strokeWidth={3}
-                  strokeOpacity={1}
-                  strokeLinecap="round"
-                />
-              ))}
-
-              {/* Cross-links — glow + outline + line */}
-              {crossLinkLines.map((line, i) => (
-                <Line
-                  key={`cross-glow-${i}`}
-                  x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2}
-                  stroke="#8888CC"
-                  strokeWidth={8}
-                  strokeOpacity={0.1}
-                  strokeLinecap="round"
-                />
-              ))}
-              {crossLinkLines.map((line, i) => (
-                <Line
+              );
+            })}
+            {/* Cross-links — dashed effect with dotted views */}
+            {crossLinkLines.map((line, i) => {
+              const dx = line.x2 - line.x1;
+              const dy = line.y2 - line.y1;
+              const length = Math.sqrt(dx * dx + dy * dy);
+              const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+              return (
+                <View
                   key={`cross-${i}`}
-                  x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2}
-                  stroke="#AAAADD"
-                  strokeWidth={2}
-                  strokeOpacity={0.6}
-                  strokeLinecap="round"
-                  strokeDasharray="6,6"
+                  style={{
+                    position: "absolute",
+                    left: line.x1,
+                    top: line.y1 - 1,
+                    width: length,
+                    height: 2,
+                    backgroundColor: "#AAAADD",
+                    opacity: 0.4,
+                    borderRadius: 1,
+                    transform: [{ rotate: `${angle}deg` }],
+                    transformOrigin: "left center",
+                  }}
                 />
-              ))}
-            </Svg>
+              );
+            })}
 
             {/* Exercise nodes */}
             {allNodes.map((node) => {
