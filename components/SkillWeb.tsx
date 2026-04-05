@@ -556,7 +556,7 @@ export default function SkillWeb({ profile }: Props) {
               const isCompleted = vis === "completed";
               const isCurrent = vis === "current";
 
-              const nodeBg = isCompleted ? darkColor : colors.cardLight;
+              const nodeBg = isCompleted ? pathColor : colors.cardLight;
 
               const nodeBorderColor = isCompleted
                 ? pathColor
@@ -619,21 +619,11 @@ export default function SkillWeb({ profile }: Props) {
                       pointerEvents="none"
                     />
                   )}
-                  <View style={styles.nodeHeader}>
-                    <View
-                      style={[
-                        styles.nodeDiffBadge,
-                        { backgroundColor: pathColor },
-                      ]}
-                    >
-                      <Text style={styles.nodeDiffText}>{ex.difficulty}</Text>
-                    </View>
-                    {isCompleted && <Text style={styles.nodeCheck}>&#x2713;</Text>}
-                    {isCurrent && <Text style={styles.nodeCurrent}>&#x25B6;</Text>}
-                  </View>
                   <Text
-                    style={styles.nodeName}
-                    numberOfLines={2}
+                    style={[styles.nodeName, { color: isCompleted ? "#FFFFFF" : colors.text }]}
+                    numberOfLines={3}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.7}
                   >
                     {ex.name}
                   </Text>
@@ -768,8 +758,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     borderRadius: 14,
     borderWidth: 2.5,
-    padding: 6,
-    justifyContent: "space-between",
+    padding: 4,
+    justifyContent: "center",
+    alignItems: "center",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.5,
     shadowRadius: 6,
@@ -818,9 +809,10 @@ const styles = StyleSheet.create({
   },
   nodeName: {
     color: colors.text,
-    fontSize: 9,
+    fontSize: 8,
     fontWeight: "800",
-    lineHeight: 12,
+    lineHeight: 10,
+    textAlign: "center",
   },
   zoomControls: {
     position: "absolute",
