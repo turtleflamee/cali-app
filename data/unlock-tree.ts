@@ -54,15 +54,15 @@ export const unlockTree: Record<string, string[]> = {
   // === STRENGTH BRANCH ===
   // Forearm Plank → Push-up, Dead Hang, Squat
   core_pk_1: ["push_pu_3", "pull_pu_1", "legs_sq_1"],
-  // Push-up → Diamond Push-up, Bench Dip, Pike Push-up
+  // Push-up → Diamond Push-up, Bench Dip, Pike Push-up (also unlocks deeper core)
   push_pu_3: ["push_pu_4", "push_di_1", "push_sp_1"],
-  // Diamond Push-up → Archer Push-up
-  push_pu_4: ["push_pu_5"],
+  // Diamond Push-up → Archer Push-up + Frog Stand (planche entry)
+  push_pu_4: ["push_pu_5", "skills_pl_1"],
   push_pu_5: ["push_pu_6"],
   push_pu_6: ["push_pu_7"],
   // Dips chain
   push_di_1: ["push_di_2"],
-  push_di_2: ["push_di_3"],
+  push_di_2: ["push_di_3", "skills_hf_1"],  // Dips unlock Human Flag path
   push_di_3: ["push_di_4"],
   push_di_4: ["push_di_5"],
   push_di_5: ["push_di_6"],
@@ -72,11 +72,11 @@ export const unlockTree: Record<string, string[]> = {
   push_sp_3: ["push_sp_4"],
   push_sp_4: ["push_sp_5", "push_sp_6"],
   push_sp_5: ["push_sp_7"],
-  // Dead Hang → Negative Pull-up, Incline Row, Explosive Pull-up
-  pull_pu_1: ["pull_pu_2", "pull_ro_1", "pull_tr_1"],
+  // Dead Hang → Negative Pull-up, Incline Row, Core progression
+  pull_pu_1: ["pull_pu_2", "pull_ro_1", "core_pk_2"],
   // Pull-up chain
   pull_pu_2: ["pull_pu_3"],
-  pull_pu_3: ["pull_pu_4"],
+  pull_pu_3: ["pull_pu_4", "skills_fl_1", "pull_tr_1"],  // Pull-up unlocks Front Lever + Explosive Pull-ups
   pull_pu_4: ["pull_pu_5"],
   pull_pu_5: ["pull_pu_6"],
   pull_pu_6: ["pull_pu_7"],
@@ -90,8 +90,9 @@ export const unlockTree: Record<string, string[]> = {
   pull_tr_1: ["pull_tr_2"],
   pull_tr_2: ["pull_tr_3"],
   pull_tr_3: ["pull_tr_4"],
-  // Core continues from plank
-  // (plank already done as gateway, next core shows via push-up unlocks)
+  // Core continues from plank gateway
+  // Plank → RKC Plank + Lying Leg Raise + Tuck L-Sit
+  core_pk_2: ["core_pk_3", "core_lr_1", "core_sh_1"],
   // Leg raises
   core_lr_1: ["core_lr_2"],
   core_lr_2: ["core_lr_3"],
@@ -99,8 +100,7 @@ export const unlockTree: Record<string, string[]> = {
   core_lr_4: ["core_lr_5"],
   core_lr_5: ["core_lr_6"],
   core_lr_6: ["core_lr_7"],
-  // Plank progression (continues from gateway)
-  core_pk_2: ["core_pk_3"],
+  // Plank progression (continues from RKC Plank which is unlocked by Dead Hang)
   core_pk_3: ["core_pk_4"],
   core_pk_4: ["core_pk_5"],
   core_pk_5: ["core_pk_6"],
@@ -161,7 +161,7 @@ export const unlockTree: Record<string, string[]> = {
   bboy_fw_6: ["bboy_fw_7"],
   bboy_fw_7: ["bboy_fw_8"],
   // Rings chain
-  rings_1: ["rings_2", "skills_pl_1"],
+  rings_1: ["rings_2"],
   rings_2: ["rings_3"],
   rings_3: ["rings_4"],
   rings_4: ["rings_5"],
@@ -169,14 +169,13 @@ export const unlockTree: Record<string, string[]> = {
   rings_6: ["rings_7"],
   rings_7: ["rings_8"],
   // Skills — planche
-  skills_pl_1: ["skills_pl_2", "skills_hf_1"],
+  skills_pl_1: ["skills_pl_2"],
   skills_pl_2: ["skills_pl_3"],
   skills_pl_3: ["skills_pl_4"],
   skills_pl_4: ["skills_pl_5"],
   skills_pl_5: ["skills_pl_6"],
   skills_pl_6: ["skills_pl_7"],
-  // Skills — front lever (unlocked from pull-ups)
-  // Will be cross-linked from pull_pu_3 or similar
+  // Skills — front lever (unlocked from Pull-up)
   skills_fl_1: ["skills_fl_2"],
   skills_fl_2: ["skills_fl_3"],
   skills_fl_3: ["skills_fl_4"],
