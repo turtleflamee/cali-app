@@ -99,13 +99,8 @@ function NativeCamera() {
     );
   }
 
-  try {
-    const poseModule = require("react-native-vision-camera-v3-pose-detection");
-    PoseCamera = poseModule.Camera;
-    hasPoseDetection = true;
-  } catch {
-    // Pose detection not available — use regular camera with tap-to-count
-  }
+  // Pose detection plugin not yet compatible — using tap-to-count for now
+  // TODO: Add skeleton tracking when vision-camera pose plugins support v4
 
   const { hasPermission, requestPermission } = useCameraPermission();
   const [facing, setFacing] = useState<"back" | "front">("front");
