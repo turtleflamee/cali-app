@@ -44,9 +44,6 @@
           "enableFrameProcessors": true
         }
       ],
-      [
-        "react-native-worklets-core"
-      ],
       "./plugins/withMLKitPose"
     ],
     "extra": {
