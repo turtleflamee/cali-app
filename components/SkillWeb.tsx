@@ -620,16 +620,21 @@ export default function SkillWeb({ profile }: Props) {
                     />
                   )}
                   <View style={styles.nodeTextWrap}>
+                    {/* 8-direction black outline */}
+                    {[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]].map(([ox,oy], oi) => (
+                      <Text
+                        key={`o-${oi}`}
+                        style={[styles.nodeName, styles.nodeNameStroke, { left: ox, top: oy }]}
+                        numberOfLines={3}
+                        adjustsFontSizeToFit
+                        minimumFontScale={0.7}
+                      >
+                        {ex.name}
+                      </Text>
+                    ))}
+                    {/* White text on top */}
                     <Text
-                      style={styles.nodeNameOutline}
-                      numberOfLines={3}
-                      adjustsFontSizeToFit
-                      minimumFontScale={0.7}
-                    >
-                      {ex.name}
-                    </Text>
-                    <Text
-                      style={[styles.nodeName, styles.nodeNameTop]}
+                      style={styles.nodeName}
                       numberOfLines={3}
                       adjustsFontSizeToFit
                       minimumFontScale={0.7}
@@ -822,17 +827,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  nodeNameOutline: {
-    color: "#000000",
-    fontSize: 9,
-    fontWeight: "900",
-    lineHeight: 12,
-    textAlign: "center",
-    letterSpacing: 0.3,
-    textShadowColor: "#000000",
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 4,
-  },
   nodeName: {
     color: "#FFFFFF",
     fontSize: 9,
@@ -841,11 +835,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     letterSpacing: 0.3,
   },
-  nodeNameTop: {
+  nodeNameStroke: {
     position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
+    color: "#000000",
   },
   zoomControls: {
     position: "absolute",
