@@ -100,7 +100,7 @@ function NativeCamera() {
   }
 
   try {
-    const poseModule = require("@scottjgilroy/react-native-vision-camera-v4-pose-detection");
+    const poseModule = require("react-native-vision-camera-v3-pose-detection");
     PoseCamera = poseModule.Camera;
     hasPoseDetection = true;
   } catch {
