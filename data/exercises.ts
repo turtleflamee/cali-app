@@ -150,7 +150,7 @@ export const exercises: Exercise[] = [
     { name: "Ring Push-up", reps: "1 rep" },
   ], estimatedMinutes: mins(40) },
 
-  { id: "push_pu_6", name: "Pseudo Planche PU", path: "push", subPath: "pushups", difficulty: 55, nodeType: "regular", description: "Push-up with hands rotated back near hips to load shoulders heavily.", formCues: ["Lean forward past hands", "Protract hard at top"], progressions: [
+  { id: "push_pu_6", name: "Pseudo Planche Push-up", path: "push", subPath: "pushups", difficulty: 55, nodeType: "regular", description: "Push-up with hands rotated back near hips to load shoulders heavily.", formCues: ["Lean forward past hands", "Protract hard at top"], progressions: [
     { name: "Planche Lean Hold", reps: "20s hold" },
     { name: "Eccentric Pseudo Planche PU (5s down)", reps: "1 rep" },
     { name: "Decline Push-up", reps: "1 rep" },
@@ -233,7 +233,7 @@ export const exercises: Exercise[] = [
     { name: "Wall Walk-Up (partial)", reps: "1 rep" },
   ], estimatedMinutes: mins(15) },
 
-  { id: "push_sp_2", name: "Elevated Pike PU", path: "push", subPath: "shoulder-press", difficulty: 25, nodeType: "regular", description: "Pike push-up with feet elevated to increase shoulder load.", formCues: ["Feet on box or bench", "Vertical torso at bottom"], progressions: [
+  { id: "push_sp_2", name: "Elevated Pike Push-up", path: "push", subPath: "shoulder-press", difficulty: 25, nodeType: "regular", description: "Pike push-up with feet elevated to increase shoulder load.", formCues: ["Feet on box or bench", "Vertical torso at bottom"], progressions: [
     { name: "Elevated Pike Hold (feet on box)", reps: "20s hold" },
     { name: "Eccentric Elevated Pike PU (5s down)", reps: "1 rep" },
     { name: "Pike Push-up (floor)", reps: "1 rep" },
@@ -241,7 +241,7 @@ export const exercises: Exercise[] = [
     { name: "Decline Push-up (deep ROM)", reps: "1 rep" },
   ], estimatedMinutes: mins(25) },
 
-  { id: "push_sp_3", name: "Wall HSPU", path: "push", subPath: "shoulder-press", difficulty: 42, nodeType: "regular", description: "Handstand push-up against a wall for supported overhead pressing.", formCues: ["Head touches floor between hands", "Lock out fully at top"], progressions: [
+  { id: "push_sp_3", name: "Wall Handstand Push-up", path: "push", subPath: "shoulder-press", difficulty: 42, nodeType: "regular", description: "Handstand push-up against a wall for supported overhead pressing.", formCues: ["Head touches floor between hands", "Lock out fully at top"], progressions: [
     { name: "Wall Handstand Hold", reps: "30s hold" },
     { name: "Eccentric Wall HSPU (5s down)", reps: "1 rep" },
     { name: "Elevated Pike PU (high box)", reps: "1 rep" },
@@ -259,7 +259,7 @@ export const exercises: Exercise[] = [
     { name: "Handstand Wall Walk-Up (belly to wall)", reps: "1 rep" },
   ], estimatedMinutes: mins(55) },
 
-  { id: "push_sp_5", name: "Freestanding HSPU", path: "push", subPath: "shoulder-press", difficulty: 75, nodeType: "final", description: "Handstand push-up without wall support requiring balance and pressing strength.", formCues: ["Controlled descent", "Press straight up without drift"], progressions: [
+  { id: "push_sp_5", name: "Freestanding Handstand Push-up", path: "push", subPath: "shoulder-press", difficulty: 75, nodeType: "final", description: "Handstand push-up without wall support requiring balance and pressing strength.", formCues: ["Controlled descent", "Press straight up without drift"], progressions: [
     { name: "Freestanding Handstand Hold", reps: "20s hold" },
     { name: "Wall HSPU (full ROM)", reps: "1 rep" },
     { name: "Freestanding HS Eccentric (5s lower to headstand)", reps: "1 rep" },
@@ -280,7 +280,7 @@ export const exercises: Exercise[] = [
 
   { id: "push_sp_7", name: "90 Degree Push-up", path: "push", subPath: "shoulder-press", difficulty: 95, nodeType: "convergence", description: "From planche position, press to handstand and back — requires both planche and HS strength.", formCues: ["Lean forward into planche", "Press vertically without kipping"], progressions: [
     { name: "Straddle Planche Hold", reps: "5s hold" },
-    { name: "Freestanding HSPU", reps: "1 rep" },
+    { name: "Freestanding Handstand Push-up", reps: "1 rep" },
     { name: "Tuck 90-Degree Press (planche to HS)", reps: "1 rep" },
     { name: "Straddle Press to Handstand", reps: "1 rep" },
     { name: "Planche Lean to Headstand Press", reps: "1 rep" },
@@ -344,7 +344,7 @@ export const exercises: Exercise[] = [
     { name: "One-Arm Scapular Pull", reps: "1 rep" },
   ], estimatedMinutes: mins(62) },
 
-  { id: "pull_pu_7", name: "Assisted OA Pull-up", path: "pull", subPath: "pullups", difficulty: 75, nodeType: "regular", description: "One-arm pull-up with minimal assistance from the other hand.", formCues: ["Use finger assist only", "Full ROM each rep"], progressions: [
+  { id: "pull_pu_7", name: "Assisted One-Arm Pull-up", path: "pull", subPath: "pullups", difficulty: 75, nodeType: "regular", description: "One-arm pull-up with minimal assistance from the other hand.", formCues: ["Use finger assist only", "Full ROM each rep"], progressions: [
     { name: "Uneven Pull-up (low towel grip)", reps: "1 rep" },
     { name: "One-Arm Negative (5s down)", reps: "1 rep" },
     { name: "One-Arm Flexed Hang", reps: "15s hold" },
@@ -457,7 +457,7 @@ export const exercises: Exercise[] = [
     { name: "Hollow Body Hold (bent knees)", reps: "1 rep" },
   ], estimatedMinutes: mins(5) },
 
-  { id: "core_pk_2", name: "RKC Plank", path: "core", subPath: "planks", difficulty: 12, nodeType: "regular", description: "Maximum tension plank contracting every muscle for short holds.", formCues: ["Pull elbows toward toes", "Brace like a punch is coming"], progressions: [
+  { id: "core_pk_2", name: "Hard Plank", path: "core", subPath: "planks", difficulty: 12, nodeType: "regular", description: "Maximum tension plank contracting every muscle for short holds.", formCues: ["Pull elbows toward toes", "Brace like a punch is coming"], progressions: [
     { name: "Forearm Plank", reps: "30s hold" },
     { name: "Hollow Body Hold", reps: "1 rep" },
     { name: "Posterior Pelvic Tilt Drill (standing)", reps: "1 rep" },
@@ -465,7 +465,7 @@ export const exercises: Exercise[] = [
     { name: "Pallof Press (anti-rotation)", reps: "1 rep" },
   ], estimatedMinutes: mins(12) },
 
-  { id: "core_pk_3", name: "Plank Walk-out", path: "core", subPath: "planks", difficulty: 20, nodeType: "regular", description: "Walk hands forward from plank to extend the lever and increase core demand.", formCues: ["Walk out as far as possible", "Keep hips level"], progressions: [
+  { id: "core_pk_3", name: "Inchworm", path: "core", subPath: "planks", difficulty: 20, nodeType: "regular", description: "Walk hands forward from plank to extend the lever and increase core demand.", formCues: ["Walk out as far as possible", "Keep hips level"], progressions: [
     { name: "High Plank Hold", reps: "30s hold" },
     { name: "Extended Plank (arms overhead)", reps: "1 rep" },
     { name: "Inchworm Walk-out", reps: "1 rep" },
@@ -691,7 +691,7 @@ export const exercises: Exercise[] = [
   ], estimatedMinutes: mins(88) },
 
   // Sub-branch: hinges
-  { id: "legs_hi_1", name: "Bodyweight RDL", path: "legs", subPath: "hinges", difficulty: 8, nodeType: "regular", description: "Hip hinge with bodyweight to learn the posterior chain movement pattern.", formCues: ["Push hips back", "Slight knee bend"], progressions: [
+  { id: "legs_hi_1", name: "Romanian Deadlift", path: "legs", subPath: "hinges", difficulty: 8, nodeType: "regular", description: "Hip hinge with bodyweight to learn the posterior chain movement pattern.", formCues: ["Push hips back", "Slight knee bend"], progressions: [
     { name: "Wall Hip Hinge Drill", reps: "1 rep" },
     { name: "Good Morning (bodyweight)", reps: "1 rep" },
     { name: "Glute Bridge Hold", reps: "15s hold" },
@@ -699,7 +699,7 @@ export const exercises: Exercise[] = [
     { name: "Eccentric RDL (5s lower)", reps: "1 rep" },
   ], estimatedMinutes: mins(8) },
 
-  { id: "legs_hi_2", name: "Single-Leg RDL", path: "legs", subPath: "hinges", difficulty: 20, nodeType: "regular", description: "Single-leg hip hinge for unilateral posterior chain strength and balance.", formCues: ["Back leg extends behind", "Hinge until torso horizontal"], progressions: [
+  { id: "legs_hi_2", name: "Single-Leg Romanian Deadlift", path: "legs", subPath: "hinges", difficulty: 20, nodeType: "regular", description: "Single-leg hip hinge for unilateral posterior chain strength and balance.", formCues: ["Back leg extends behind", "Hinge until torso horizontal"], progressions: [
     { name: "Bodyweight RDL (bilateral)", reps: "1 rep" },
     { name: "Kickstand RDL (offset stance)", reps: "1 rep" },
     { name: "Single-Leg Glute Bridge", reps: "1 rep" },
@@ -707,8 +707,8 @@ export const exercises: Exercise[] = [
     { name: "Single-Leg Balance Hold", reps: "15s hold" },
   ], estimatedMinutes: mins(20) },
 
-  { id: "legs_hi_3", name: "Negative Nordic Curl", path: "legs", subPath: "hinges", difficulty: 38, nodeType: "regular", description: "Slow eccentric descent of a Nordic curl to build hamstring strength.", formCues: ["Anchor feet securely", "Control the fall"], progressions: [
-    { name: "Single-Leg RDL", reps: "1 rep" },
+  { id: "legs_hi_3", name: "Negative Nordic Hamstring Curl", path: "legs", subPath: "hinges", difficulty: 38, nodeType: "regular", description: "Slow eccentric descent of a Nordic curl to build hamstring strength.", formCues: ["Anchor feet securely", "Control the fall"], progressions: [
+    { name: "Single-Leg Romanian Deadlift", reps: "1 rep" },
     { name: "Glute-Ham Raise (assisted)", reps: "1 rep" },
     { name: "Prone Hamstring Curl (band)", reps: "1 rep" },
     { name: "Short-Range Nordic Eccentric (top 30 degrees)", reps: "1 rep" },
@@ -716,7 +716,7 @@ export const exercises: Exercise[] = [
     { name: "Slider Hamstring Curl", reps: "1 rep" },
   ], estimatedMinutes: mins(38) },
 
-  { id: "legs_hi_4", name: "Nordic Curl", path: "legs", subPath: "hinges", difficulty: 55, nodeType: "final", description: "Full Nordic curl with concentric and eccentric phases.", formCues: ["Hips extended throughout", "Pull back with hamstrings"], progressions: [
+  { id: "legs_hi_4", name: "Nordic Hamstring Curl", path: "legs", subPath: "hinges", difficulty: 55, nodeType: "final", description: "Full Nordic curl with concentric and eccentric phases.", formCues: ["Hips extended throughout", "Pull back with hamstrings"], progressions: [
     { name: "Negative Nordic Curl (full ROM, 5s)", reps: "1 rep" },
     { name: "Band-Assisted Nordic Curl", reps: "1 rep" },
     { name: "Nordic Curl Bottom Catch (hand push-off)", reps: "1 rep" },
@@ -802,7 +802,7 @@ export const exercises: Exercise[] = [
     { name: "Straight-Arm Lat Pulldown", reps: "1 rep" },
   ], estimatedMinutes: mins(35) },
 
-  { id: "skills_fl_2", name: "Adv. Tuck Front Lever", path: "skills", subPath: "front-lever", difficulty: 45, nodeType: "regular", description: "Front lever with knees tucked but back flattened.", formCues: ["Flat back", "Depress shoulders"], progressions: [
+  { id: "skills_fl_2", name: "Advanced Tuck Front Lever", path: "skills", subPath: "front-lever", difficulty: 45, nodeType: "regular", description: "Front lever with knees tucked but back flattened.", formCues: ["Flat back", "Depress shoulders"], progressions: [
     { name: "Tuck Front Lever Hold", reps: "15s hold" },
     { name: "Adv. Tuck FL Eccentric (5s lower)", reps: "1 rep" },
     { name: "Tuck Front Lever Row", reps: "1 rep" },
@@ -883,7 +883,7 @@ export const exercises: Exercise[] = [
     { name: "Straight-Arm Shoulder Depression Press", reps: "1 rep" },
   ], estimatedMinutes: mins(18) },
 
-  { id: "rings_2", name: "Ring Dips RTO", path: "rings", subPath: "rings", difficulty: 38, nodeType: "regular", description: "Ring dip maintaining rings-turned-out position throughout.", formCues: ["RTO at top and bottom", "Full depth"], progressions: [
+  { id: "rings_2", name: "Ring Dips Turned Out", path: "rings", subPath: "rings", difficulty: 38, nodeType: "regular", description: "Ring dip maintaining rings-turned-out position throughout.", formCues: ["RTO at top and bottom", "Full depth"], progressions: [
     { name: "Ring Support Hold (RTO)", reps: "20s hold" },
     { name: "Ring Dip Eccentric RTO (5s down)", reps: "1 rep" },
     { name: "Ring Dip (standard)", reps: "1 rep" },
@@ -955,7 +955,7 @@ export const exercises: Exercise[] = [
   // PATH 7: BREAKDANCE
   // ============================================================
   // Sub-branch: toprock
-  { id: "bboy_tr_1", name: "Bounce / Rock", path: "breakdance", subPath: "toprock", difficulty: 3, nodeType: "regular", description: "Basic bounce rhythm that forms the foundation of all toprock.", formCues: ["Stay on beat", "Relaxed shoulders"], progressions: [
+  { id: "bboy_tr_1", name: "Bounce Rock", path: "breakdance", subPath: "toprock", difficulty: 3, nodeType: "regular", description: "Basic bounce rhythm that forms the foundation of all toprock.", formCues: ["Stay on beat", "Relaxed shoulders"], progressions: [
     { name: "Marching in Place (on beat)", reps: "1 rep" },
     { name: "Calf Raise Bounce Drill", reps: "1 rep" },
     { name: "Two-Step Side Rock", reps: "1 rep" },
@@ -987,7 +987,7 @@ export const exercises: Exercise[] = [
     { name: "Hip Flexor Kick Strength Lift", reps: "1 rep" },
   ], estimatedMinutes: mins(20) },
 
-  { id: "bboy_tr_5", name: "Salsa/Power Step", path: "breakdance", subPath: "toprock", difficulty: 28, nodeType: "regular", description: "Dynamic toprock step with salsa-inspired footwork and power.", formCues: ["Quick feet", "Drive from hips"], progressions: [
+  { id: "bboy_tr_5", name: "Power Step", path: "breakdance", subPath: "toprock", difficulty: 28, nodeType: "regular", description: "Dynamic toprock step with salsa-inspired footwork and power.", formCues: ["Quick feet", "Drive from hips"], progressions: [
     { name: "Kick Step Out/Over (on beat)", reps: "1 rep" },
     { name: "Quick Feet Shuffle Drill", reps: "1 rep" },
     { name: "Lateral Hop Step", reps: "1 rep" },
@@ -995,7 +995,7 @@ export const exercises: Exercise[] = [
     { name: "Salsa Basic Step (slow)", reps: "1 rep" },
   ], estimatedMinutes: mins(28) },
 
-  { id: "bboy_tr_6", name: "Float/Glide Steps", path: "breakdance", subPath: "toprock", difficulty: 36, nodeType: "regular", description: "Smooth gliding toprock steps that create an illusion of floating.", formCues: ["Slide feet smoothly", "Stay light on toes"], progressions: [
+  { id: "bboy_tr_6", name: "Glide Steps", path: "breakdance", subPath: "toprock", difficulty: 36, nodeType: "regular", description: "Smooth gliding toprock steps that create an illusion of floating.", formCues: ["Slide feet smoothly", "Stay light on toes"], progressions: [
     { name: "Salsa/Power Step (on beat)", reps: "1 rep" },
     { name: "Toe Slide Drill (smooth floor)", reps: "1 rep" },
     { name: "Moonwalk Step (basic)", reps: "1 rep" },
@@ -1038,7 +1038,7 @@ export const exercises: Exercise[] = [
     { name: "Wrist Strength Hold (floor support)", reps: "10s hold" },
   ], estimatedMinutes: mins(24) },
 
-  { id: "bboy_fw_4", name: "CCs / Zulu Spins", path: "breakdance", subPath: "footwork", difficulty: 30, nodeType: "regular", description: "Spinning footwork with legs extended creating a sweeping motion.", formCues: ["Wide sweep", "Momentum from hips"], progressions: [
+  { id: "bboy_fw_4", name: "CC Spins", path: "breakdance", subPath: "footwork", difficulty: 30, nodeType: "regular", description: "Spinning footwork with legs extended creating a sweeping motion.", formCues: ["Wide sweep", "Momentum from hips"], progressions: [
     { name: "3-Step (fast and clean)", reps: "1 rep" },
     { name: "Coffee Grinder (fast rotation)", reps: "1 rep" },
     { name: "Seated Spin Drill (hands on floor)", reps: "1 rep" },
@@ -1046,7 +1046,7 @@ export const exercises: Exercise[] = [
     { name: "Extended Leg Sweep (low to ground)", reps: "1 rep" },
   ], estimatedMinutes: mins(30) },
 
-  { id: "bboy_fw_5", name: "Kick-outs / Switches", path: "breakdance", subPath: "footwork", difficulty: 36, nodeType: "regular", description: "Quick leg extensions and switches while in footwork position.", formCues: ["Sharp kick extensions", "Quick switches"], progressions: [
+  { id: "bboy_fw_5", name: "Kick-out Switches", path: "breakdance", subPath: "footwork", difficulty: 36, nodeType: "regular", description: "Quick leg extensions and switches while in footwork position.", formCues: ["Sharp kick extensions", "Quick switches"], progressions: [
     { name: "CCs / Zulu Spins (clean)", reps: "1 rep" },
     { name: "Low Squat Kick Extension", reps: "1 rep" },
     { name: "Plank Scissor Kick", reps: "1 rep" },
@@ -1054,7 +1054,7 @@ export const exercises: Exercise[] = [
     { name: "Single-Arm Support Kick Hold", reps: "5s hold" },
   ], estimatedMinutes: mins(36) },
 
-  { id: "bboy_fw_6", name: "Threading / Hooks", path: "breakdance", subPath: "footwork", difficulty: 44, nodeType: "regular", description: "Thread legs through arms or hook legs around arms during footwork.", formCues: ["Thread cleanly", "Maintain flow"], progressions: [
+  { id: "bboy_fw_6", name: "Threading Hooks", path: "breakdance", subPath: "footwork", difficulty: 44, nodeType: "regular", description: "Thread legs through arms or hook legs around arms during footwork.", formCues: ["Thread cleanly", "Maintain flow"], progressions: [
     { name: "Kick-outs / Switches (clean)", reps: "1 rep" },
     { name: "Seated Thread-Through Drill", reps: "1 rep" },
     { name: "Plank Thread-Through (slow)", reps: "1 rep" },
@@ -1241,7 +1241,7 @@ export const exercises: Exercise[] = [
     { name: "One-Hand Spin Attempt (half turn)", reps: "1 rep" },
   ], estimatedMinutes: mins(85) },
 
-  { id: "bboy_pm_9", name: "Airflare", path: "breakdance", subPath: "power-moves", difficulty: 92, nodeType: "convergence", description: "Rotating through the air alternating hand support — the king of power moves.", formCues: ["Commit to the rotation", "Kick through hard"], progressions: [
+  { id: "bboy_pm_9", name: "Air Flare", path: "breakdance", subPath: "power-moves", difficulty: 92, nodeType: "convergence", description: "Rotating through the air alternating hand support — the king of power moves.", formCues: ["Commit to the rotation", "Kick through hard"], progressions: [
     { name: "Flare (5+ rotations)", reps: "1 rep" },
     { name: "Handstand (solid)", reps: "20s hold" },
     { name: "Thomas Flair (high elevation)", reps: "1 rep" },
@@ -1252,7 +1252,7 @@ export const exercises: Exercise[] = [
     { name: "Swipe to Airflare Entry Drill", reps: "1 rep" },
   ], estimatedMinutes: mins(92) },
 
-  { id: "bboy_pm_10", name: "Airflare to 1990", path: "breakdance", subPath: "power-moves", difficulty: 96, nodeType: "convergence", description: "Transition from airflare directly into a 1990 one-hand spin.", formCues: ["Clean airflare exit", "Catch into 1990 balance"], progressions: [
+  { id: "bboy_pm_10", name: "Air Flare to 1990", path: "breakdance", subPath: "power-moves", difficulty: 96, nodeType: "convergence", description: "Transition from airflare directly into a 1990 one-hand spin.", formCues: ["Clean airflare exit", "Catch into 1990 balance"], progressions: [
     { name: "Airflare (3+ rotations)", reps: "1 rep" },
     { name: "1990 (solid spins)", reps: "1 rep" },
     { name: "Airflare to Handstand Catch", reps: "1 rep" },
@@ -1283,7 +1283,7 @@ export const exercises: Exercise[] = [
     { name: "Kneeling Lat Stretch", reps: "1 rep" },
   ], estimatedMinutes: mins(12) },
 
-  { id: "flex_sh_3", name: "Passive Hang 60s", path: "flexibility", subPath: "flex-shoulders", difficulty: 18, nodeType: "regular", description: "Hang from a bar fully relaxed for 60 seconds to decompress shoulders.", formCues: ["Relax completely", "Let gravity stretch"], progressions: [
+  { id: "flex_sh_3", name: "Passive Hang", path: "flexibility", subPath: "flex-shoulders", difficulty: 18, nodeType: "regular", description: "Hang from a bar fully relaxed for 60 seconds to decompress shoulders.", formCues: ["Relax completely", "Let gravity stretch"], progressions: [
     { name: "Puppy Pose Hold", reps: "30s hold" },
     { name: "Dead Hang (30s build-up)", reps: "1 rep" },
     { name: "Shoulder Flexion Wall Stretch", reps: "1 rep" },
@@ -1383,7 +1383,7 @@ export const exercises: Exercise[] = [
     { name: "Pseudo Planche Wrist Conditioning", reps: "1 rep" },
   ], estimatedMinutes: mins(52) },
 
-  { id: "flex_wr_7", name: "HS Wrist Comfort", path: "flexibility", subPath: "flex-wrists", difficulty: 65, nodeType: "final", description: "Comfortable handstand hold with full wrist extension under load.", formCues: ["Fingers spread wide", "No wrist pain at full extension"], progressions: [
+  { id: "flex_wr_7", name: "Handstand Wrist Prep", path: "flexibility", subPath: "flex-wrists", difficulty: 65, nodeType: "final", description: "Comfortable handstand hold with full wrist extension under load.", formCues: ["Fingers spread wide", "No wrist pain at full extension"], progressions: [
     { name: "Planche-Lean Wrist Hold (solid)", reps: "15s hold" },
     { name: "Wall Handstand Wrist Hold", reps: "1 rep" },
     { name: "Fingertip Handstand Balance Drill", reps: "1 rep" },
@@ -1417,7 +1417,7 @@ export const exercises: Exercise[] = [
     { name: "PNF Hamstring Stretch (contract-relax)", reps: "1 rep" },
   ], estimatedMinutes: mins(30) },
 
-  { id: "flex_pk_4", name: "Active Compression", path: "flexibility", subPath: "flex-pike", difficulty: 42, nodeType: "regular", description: "Actively pull torso toward legs using hip flexor strength.", formCues: ["Use hip flexors to pull", "Hold end range"], progressions: [
+  { id: "flex_pk_4", name: "Active Pike Lift", path: "flexibility", subPath: "flex-pike", difficulty: 42, nodeType: "regular", description: "Actively pull torso toward legs using hip flexor strength.", formCues: ["Use hip flexors to pull", "Hold end range"], progressions: [
     { name: "Standing Pike (palms flat)", reps: "20s hold" },
     { name: "Seated Leg Lift (compression drill)", reps: "1 rep" },
     { name: "Supine Hip Flexor March", reps: "1 rep" },
@@ -1442,7 +1442,7 @@ export const exercises: Exercise[] = [
     { name: "Active Pike Pulse (no momentum)", reps: "1 rep" },
   ], estimatedMinutes: mins(68) },
 
-  { id: "flex_pk_7", name: "Full Compression", path: "flexibility", subPath: "flex-pike", difficulty: 82, nodeType: "final", description: "Complete compression with chest flat on thighs and legs straight — needed for manna.", formCues: ["Zero gap between torso and legs", "Toes pointed"], progressions: [
+  { id: "flex_pk_7", name: "Full Pike Compression", path: "flexibility", subPath: "flex-pike", difficulty: 82, nodeType: "final", description: "Complete compression with chest flat on thighs and legs straight — needed for manna.", formCues: ["Zero gap between torso and legs", "Toes pointed"], progressions: [
     { name: "Active Pike Compression Hold", reps: "10s hold" },
     { name: "Full Compression Attempt (assisted pull)", reps: "1 rep" },
     { name: "V-Sit Hold (legs high)", reps: "1 rep" },
@@ -1460,7 +1460,7 @@ export const exercises: Exercise[] = [
     { name: "Butterfly Forward Fold", reps: "1 rep" },
   ], estimatedMinutes: mins(8) },
 
-  { id: "flex_hi_2", name: "Deep Squat Hold 60s", path: "flexibility", subPath: "flex-hips", difficulty: 15, nodeType: "regular", description: "Hold the bottom of a deep squat for 60 seconds to open hips.", formCues: ["Heels on floor", "Push knees out with elbows"], progressions: [
+  { id: "flex_hi_2", name: "Deep Squat Hold", path: "flexibility", subPath: "flex-hips", difficulty: 15, nodeType: "regular", description: "Hold the bottom of a deep squat for 60 seconds to open hips.", formCues: ["Heels on floor", "Push knees out with elbows"], progressions: [
     { name: "Butterfly Stretch Hold", reps: "30s hold" },
     { name: "Goblet Squat Hold (no weight)", reps: "1 rep" },
     { name: "Assisted Deep Squat (holding post)", reps: "1 rep" },
@@ -1476,7 +1476,7 @@ export const exercises: Exercise[] = [
     { name: "Supine Frog Stretch (gravity assisted)", reps: "1 rep" },
   ], estimatedMinutes: mins(22) },
 
-  { id: "flex_hi_4", name: "Seated Straddle (halfway)", path: "flexibility", subPath: "flex-hips", difficulty: 32, nodeType: "regular", description: "Seated straddle fold reaching halfway to the floor.", formCues: ["Wide legs, fold forward", "Lead with chest"], progressions: [
+  { id: "flex_hi_4", name: "Half Straddle", path: "flexibility", subPath: "flex-hips", difficulty: 32, nodeType: "regular", description: "Seated straddle fold reaching halfway to the floor.", formCues: ["Wide legs, fold forward", "Lead with chest"], progressions: [
     { name: "Frog Stretch Hold", reps: "30s hold" },
     { name: "Seated Straddle Side Reach", reps: "1 rep" },
     { name: "Standing Straddle Fold (wide stance)", reps: "1 rep" },
@@ -1484,7 +1484,7 @@ export const exercises: Exercise[] = [
     { name: "Seated Straddle Rotation (side to center)", reps: "1 rep" },
   ], estimatedMinutes: mins(32) },
 
-  { id: "flex_hi_5", name: "Pancake (chest to floor)", path: "flexibility", subPath: "flex-hips", difficulty: 50, nodeType: "regular", description: "Seated straddle with chest flat on the floor.", formCues: ["Chest and belly on floor", "Walk hands forward"], progressions: [
+  { id: "flex_hi_5", name: "Full Pancake", path: "flexibility", subPath: "flex-hips", difficulty: 50, nodeType: "regular", description: "Seated straddle with chest flat on the floor.", formCues: ["Chest and belly on floor", "Walk hands forward"], progressions: [
     { name: "Seated Straddle (halfway down)", reps: "20s hold" },
     { name: "Elevated Pancake (sit on block)", reps: "1 rep" },
     { name: "PNF Pancake (contract-relax)", reps: "1 rep" },
@@ -1493,14 +1493,14 @@ export const exercises: Exercise[] = [
   ], estimatedMinutes: mins(50) },
 
   { id: "flex_hi_6", name: "Elevated Pancake", path: "flexibility", subPath: "flex-hips", difficulty: 62, nodeType: "regular", description: "Pancake stretch with hips elevated on a block for deeper range.", formCues: ["Sit on elevation", "Fold deeper than floor pancake"], progressions: [
-    { name: "Pancake (chest to floor)", reps: "30s hold" },
+    { name: "Full Pancake", reps: "30s hold" },
     { name: "Pancake on Yoga Block", reps: "1 rep" },
     { name: "Active Pancake Compression", reps: "1 rep" },
     { name: "PNF Elevated Pancake (contract-relax)", reps: "1 rep" },
     { name: "Straddle Wall Slide (legs on wall)", reps: "1 rep" },
   ], estimatedMinutes: mins(62) },
 
-  { id: "flex_hi_7", name: "Half Middle Split 150+", path: "flexibility", subPath: "flex-hips", difficulty: 72, nodeType: "regular", description: "Middle split open to at least 150 degrees.", formCues: ["Slide feet wider gradually", "Support with hands"], progressions: [
+  { id: "flex_hi_7", name: "Wide Middle Split", path: "flexibility", subPath: "flex-hips", difficulty: 72, nodeType: "regular", description: "Middle split open to at least 150 degrees.", formCues: ["Slide feet wider gradually", "Support with hands"], progressions: [
     { name: "Elevated Pancake Hold", reps: "30s hold" },
     { name: "Wall Middle Split Slide", reps: "1 rep" },
     { name: "Standing Straddle Stretch (wide)", reps: "1 rep" },
@@ -1588,7 +1588,7 @@ export const exercises: Exercise[] = [
   ], estimatedMinutes: mins(90) },
 
   // Sub-branch: flex-front-split
-  { id: "flex_fs_1", name: "Half-Kneeling Hip Flexor", path: "flexibility", subPath: "flex-front-split", difficulty: 8, nodeType: "regular", description: "Lunge stretch targeting the hip flexor of the rear leg.", formCues: ["Squeeze rear glute", "Push hips forward"], progressions: [
+  { id: "flex_fs_1", name: "Kneeling Hip Flexor Stretch", path: "flexibility", subPath: "flex-front-split", difficulty: 8, nodeType: "regular", description: "Lunge stretch targeting the hip flexor of the rear leg.", formCues: ["Squeeze rear glute", "Push hips forward"], progressions: [
     { name: "Standing Quad Stretch", reps: "15s hold" },
     { name: "Couch Stretch (mild)", reps: "1 rep" },
     { name: "Kneeling Lunge (upright torso)", reps: "1 rep" },
