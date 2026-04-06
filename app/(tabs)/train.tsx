@@ -62,19 +62,32 @@ export default function TrainScreen() {
             .sort((a, b) => a.difficulty - b.difficulty)[0] ?? null;
           const pathColor = pathColors[path];
 
+          // Check if ANY exercise on this path has been completed or is visible
+          const anyVisible = exercises.some((e) => e.path === path && visibleSet.has(e.id));
+          const anyCompleted = exercises.some((e) => e.path === path && completedSet.has(e.id));
+          const allCompleted = anyVisible && exercises
+            .filter((e) => e.path === path && visibleSet.has(e.id))
+            .every((e) => completedSet.has(e.id));
+
           if (!nextExercise) {
-            // Past all exercises in this path
+            if (allCompleted && anyCompleted) {
+              return (
+                <View key={path} style={[styles.pathCard, { borderColor: colors.success }]}>
+                  <Text style={styles.pathIcon}>{pathIcons[path]}</Text>
+                  <View style={styles.pathInfo}>
+                    <Text style={styles.pathName}>{pathLabels[path]}</Text>
+                    <Text style={[styles.pathStatus, { color: colors.success }]}>Path Complete!</Text>
+                  </View>
+                </View>
+              );
+            }
+            // Path not yet unlocked
             return (
-              <View
-                key={path}
-                style={[styles.pathCard, { borderColor: colors.success }]}
-              >
+              <View key={path} style={[styles.pathCard, { borderColor: colors.locked }]}>
                 <Text style={styles.pathIcon}>{pathIcons[path]}</Text>
                 <View style={styles.pathInfo}>
                   <Text style={styles.pathName}>{pathLabels[path]}</Text>
-                  <Text style={[styles.pathStatus, { color: colors.success }]}>
-                    Path Complete!
-                  </Text>
+                  <Text style={[styles.pathStatus, { color: colors.textDim }]}>Not yet unlocked</Text>
                 </View>
               </View>
             );
